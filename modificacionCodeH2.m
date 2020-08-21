@@ -340,8 +340,8 @@ for i=1:n
        
         
         
-       Dist=reshape(dist,1,n1*m1);
-       Int=reshape(Intensidad,1,n1*m1);
+       Dist=reshape(dist,1,[]);
+       Int=reshape(Intensidad,1,[]);
        
        Largo=size(Dist,2);
        
