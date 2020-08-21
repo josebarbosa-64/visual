@@ -1,13 +1,15 @@
-function I = fpng(f,c)
+function I = fpng(f,c,aa,ba)
 %F.T. 04/2020
 %HD(HD Ready) 9*16 1280*720p
 %Crea figuras de manera aleatoria y la guarda en la carpeta actual
 %c número de columnas con imágenes 
 %f número de filas con imágenes
+%aa ancho de la imagen resultante
+%ba alto de la imagen resultante
 %I imagen de salida en RGB
 %% Carga imagen de fondo y logos de las carpetas
     I = imread('Fondos/Fondo1.png'); 
-    
+    I=I(1:aa,1:ba);
     f1 = imread('Logos/amazon.png');
     f2 = imread('Logos/netflix.png');
     f3 = imread('Logos/audi.png');
