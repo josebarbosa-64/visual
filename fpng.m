@@ -4,8 +4,8 @@ function I = fpng(f,c,aa,ba)
 %Crea figuras de manera aleatoria y la guarda en la carpeta actual
 %c número de columnas con imágenes 
 %f número de filas con imágenes
-%aa ancho de la imagen resultante
-%ba alto de la imagen resultante
+%aa largo de la imagen resultante
+%ba ancho de la imagen resultante
 %I imagen de salida en RGB
 %% Carga imagen de fondo y logos de las carpetas
     I = imread('Fondos/Fondo1.png'); 
