@@ -328,6 +328,8 @@ for i=1:n
         end
         hu_matrix2(i,j,:)=hu_moment_fast(A(ini:inf,jni:jnf)); %matriz hu de la fig grande
         dist=zeros(n1,m1);
+        Intensidad=zeros(n1,m1);
+        
         for v=1:10:n1  %recorremos el vencidario del logo
             for w=1:10:m1
                 aux=zeros(1,c);
