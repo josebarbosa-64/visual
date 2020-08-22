@@ -1,8 +1,8 @@
 function modificacionCodeH2 ()
 %Funcion con H Sin normalizar con zeropadingo y dos momentos de Hu
 clear
-I1=double(imread('PRUEBA.png'))/255;
-I2=double(imread('Logos/lightning.png'))/255;
+I1=double(imread('imag_prueba_1_small.tif'))/255;
+I2=double(imread('logo1.tif'))/255;
 %h0.1 -0.11-0.12-0.13-0.14-0.15-0.16-0.17
 bb1=0.1;
 bb2=0.2;
