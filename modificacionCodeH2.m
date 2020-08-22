@@ -346,12 +346,12 @@ for i=1:n
        Largo=size(Dist,2);
        
        
-       na1=0;
-       n2=0;
-       n3=0;
-       n4=0;
-       n5=0;
-       n6=0;
+       na1=nan(1,Largo);
+       n2=nan(1,Largo);
+       n3=nan(1,Largo);
+       n4=nan(1,Largo);
+       n5=nan(1,Largo);
+       n6=nan(1,Largo);
      
        n7=0;
        n8=0;
