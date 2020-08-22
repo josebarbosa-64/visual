@@ -234,8 +234,8 @@ qh8=zeros(n,m);
 hu_matrix1=zeros(n1,m1,2);
 hu_matrix2=zeros(n,m,2);
 
-for i=1:10:n1
-    for j=1:10:m1        
+for i=1:5:n1
+    for j=1:5:m1        
 
         %small neighborhoods limits
         if i-N_midle <= 0
@@ -330,8 +330,8 @@ for i=1:n
         dist=zeros(n1,m1);
         Intensidad=zeros(n1,m1);
         
-        for v=1:10:n1  %recorremos el vencidario del logo
-            for w=1:10:m1
+        for v=1:5:n1  %recorremos el vencidario del logo
+            for w=1:5:m1
                 aux=zeros(1,c);
                 aux(:)=(hu_matrix2(i,j,:)-hu_matrix1(v,w,:)).^2;
                 dist(v,w)=sum(weight.*aux);
