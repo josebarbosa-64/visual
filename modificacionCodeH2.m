@@ -353,8 +353,8 @@ for i=1:n
        n5=nan(1,Largo);
        n6=nan(1,Largo);
      
-       n7=0;
-       n8=0;
+       n7=nan(1,Largo);
+       n8=nan(1,Largo);
        for k=1: Largo
           
            if Dist(k)< T1            % para promediar usando mean, en los casos q no se cumple la condicion se pone NaN en lugar de dejarlos en cero
