@@ -1,26 +1,26 @@
 function modificacionCodeH2 ()
 %Funcion con H Sin normalizar con zeropadingo y dos momentos de Hu
 clear
-I1=double(imread('imag_prueba_1_small.tif'))/255;
-I2=double(imread('logo1.tif'))/255;
+I1=double(imread('PRUEBA.png'))/255;
+I2=double(imread('Logos/nike.png'))/255;
 %h0.1 -0.11-0.12-0.13-0.14-0.15-0.16-0.17
 bb1=0.1;
-bb2=0.2;
-bb3=0.3;
-bb4=0.4;
-bb5=0.5;
-bb6=0.6;
-bb7=0.7;
-bb8=0.8;
-bb9=0.9;
+bb2=0.06;
+bb3=0.07;
+bb4=0.08;
+bb5=0.09;
+bb6=0.11;
+bb7=0.12;
+bb8=0.13;
+bb9=0.14;
 T1=8; % este es el parametro th
 T2=7;
 T3=6;
 T4=5;
 T5=4;
-T6=3;
-T7=2;
-T8=1;
+T6=50;
+T7=20;
+T8=10;
 
 
 N= 94;
@@ -234,8 +234,8 @@ qh8=zeros(n,m);
 hu_matrix1=zeros(n1,m1,2);
 hu_matrix2=zeros(n,m,2);
 
-for i=1:n1
-    for j=1:m1        
+for i=1:05:n1
+    for j=1:5:m1        
 
         %small neighborhoods limits
         if i-N_midle <= 0
@@ -330,8 +330,8 @@ for i=1:n
         dist=zeros(n1,m1);
         Intensidad=zeros(n1,m1);
         
-        for v=1:n1  %recorremos el vencidario del logo
-            for w=1:m1
+        for v=1:5:n1  %recorremos el vencidario del logo
+            for w=1:5:m1
                 aux=zeros(1,c);
                 aux(:)=(hu_matrix2(i,j,:)-hu_matrix1(v,w,:)).^2;
                 dist(v,w)=sum(weight.*aux);
@@ -339,8 +339,6 @@ for i=1:n
                 
             end           
         end
-       
-        
         
        Dist=reshape(dist,1,[]);
        Int=reshape(Intensidad,1,[]);

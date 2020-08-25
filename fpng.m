@@ -35,5 +35,6 @@ function I = fpng(f,c,aa,ba)
             I(k*80+1:k*80+60,i*80+1:i*80+60,1:3) = frot;
         end
     end 
+    I=rgb2gray(I);
     imwrite(I,'PRUEBA.png')%Nombre del archivo
 end 
