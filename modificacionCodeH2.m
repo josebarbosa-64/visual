@@ -334,11 +334,9 @@ for i=1:n
             for w=1:5:m1
                 aux=zeros(1,c);
                 aux(:)=(hu_matrix2(i,j,:)-hu_matrix1(v,w,:)).^2;
-                dist(v,w)=sum(weight.*aux);
-                Intensidad(v,w)= B(v,w);
-                
-            end           
-        end
+           
+        dist(i,j)=sum(weight.*aux);
+        Intensidad= A;
         
        Dist=reshape(dist,1,[]);
        Int=reshape(Intensidad,1,[]);
@@ -742,7 +740,8 @@ for i=1:n
         
         
         
-        
+         end           
+        end
         
         
         end

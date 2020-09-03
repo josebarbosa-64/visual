@@ -1,29 +1,32 @@
-function modificacionCodeH2 ()
-%Funcion con H Sin normalizar con zeropadingo y dos momentos de Hu
+function EMF ()
+%Funcion con H Sin normalizar y dos momentos de Hu
 clear
+A=magic(5);
 I1=double(imread('PRUEBA.png'))/255;
 I2=double(imread('Logos/nike.png'))/255;
-%h0.1 -0.11-0.12-0.13-0.14-0.15-0.16-0.17
-bb1=0.1;
-bb2=0.06;
-bb3=0.07;
-bb4=0.08;
-bb5=0.09;
-bb6=0.11;
-bb7=0.12;
-bb8=0.13;
-bb9=0.14;
-T1=8; % este es el parametro th
-T2=7;
-T3=6;
-T4=5;
-T5=4;
-T6=50;
-T7=20;
-T8=10;
-
-
 N= 94;
+%los valores bb deben ser enteros
+bb1=1;
+bb2=2;
+bb3=3;
+bb4=4;
+bb5=5;
+bb6=6;
+bb7=7;
+bb8=8;
+bb9=9;
+
+T1=0.1; % este es el parametro th
+T2=0.2;
+T3=0.3;
+T4=0.4;
+T5=0.5;
+T6=0.6;
+T7=0.7;
+T8=0.8;
+
+
+
 [p1 q1 p2 q2 p3 q3 p4 q4 p5 q5 p6 q6 p7 q7 p8 q8 qa1 qa2 qa3 qa4 qa5 qa6 qa7 qa8 qb1 qb2 qb3 qb4 qb5 qb6 qb7 qb8 qc1 qc2 qc3 qc4 qc5 qc6 qc7 qc8 qd1 qd2 qd3 qd4 qd5 qd6 qd7 qd8 qe1 qe2 qe3 qe4 qe5 qe6 qe7 qe8 qf1 qf2 qf3 qf4 qf5 qf6 qf7 qf8 qg1 qg2 qg3 qg4 qg5 qg6 qg7 qg8 qh1 qh2 qh3 qh4 qh5 qh6 qh7 qh8 ]=NLM_hu(I1,I2,N,T1,T2,T3,T4,T5,T6,T7,T8,bb1,bb2,bb3,bb4,bb5,bb6,bb7,bb8,bb9);
 
 imwrite(uint8(p1*255),strcat('prueba_corazon_Th= ', num2str(T1),',',num2str(N),'puntos.tif'))
@@ -234,8 +237,8 @@ qh8=zeros(n,m);
 hu_matrix1=zeros(n1,m1,2);
 hu_matrix2=zeros(n,m,2);
 
-for i=1:05:n1
-    for j=1:5:m1        
+for i=1:n1
+    for j=1:m1        
 
         %small neighborhoods limits
         if i-N_midle <= 0
@@ -282,9 +285,8 @@ weight=1./(var_hu);
 
 
 %neighborhood calculation
-for i=1:n
-    for j=1:m
-        
+tic
+
         Q1=0;
         P1=0;
         Q2=0;
@@ -301,7 +303,10 @@ for i=1:n
         P7=0; 
         Q8=0;
         P8=0;
-        Dista=ones(1,n1*m1);
+for i=1:n
+    for j=1:m
+        
+       % Dista=ones(1,n1*m1);
         %small neighborhoods limits
         if i-N_midle <= 0
             ini=1;
@@ -326,429 +331,226 @@ for i=1:n
         else
             jnf=j+N_midle;
         end
+        
         hu_matrix2(i,j,:)=hu_moment_fast(A(ini:inf,jni:jnf)); %matriz hu de la fig grande
-        dist=zeros(n1,m1);
-        Intensidad=zeros(n1,m1);
         
-        for v=1:5:n1  %recorremos el vencidario del logo
-            for w=1:5:m1
-                aux=zeros(1,c);
-                aux(:)=(hu_matrix2(i,j,:)-hu_matrix1(v,w,:)).^2;
-                dist(i,j)=sum(weight.*aux);
-                Intensidad(i,j)= B(v,w);
-                
-            end           
-        end
-        
-       Dist=reshape(dist,1,[]);
-       Int=reshape(Intensidad,1,[]);
-       
-       Largo=size(Dist,2);
-       
-       
-       na1=nan(1,Largo);
-       n2=nan(1,Largo);
-       n3=nan(1,Largo);
-       n4=nan(1,Largo);
-       n5=nan(1,Largo);
-       n6=nan(1,Largo);
-     
-       n7=nan(1,Largo);
-       n8=nan(1,Largo);
-       for k=1: Largo
-          
-           if Dist(k)< T1            % para promediar usando mean, en los casos q no se cumple la condicion se pone NaN en lugar de dejarlos en cero
-                
-               na1(k)= Int(k);
-           else    
-               na1(k)=NaN;
-           end 
-          
-           if Dist(k)< T2
-               
-            n2(k)= Int(k);
-           else    
-               n2(k)=NaN;
-           end
-           
-           if Dist(k)< T3
-             
-            n3(k)= Int(k);
-           else    
-               n3(k)=NaN;
-           end
-           
-           if Dist(k)< T4
-            n4(k)= Int(k);
-           else    
-               n4(k)=NaN;
-           end
-          
-           if Dist(k)< T5
-           
-            n5(k)= Int(k);
-           else    
-               n5(k)=NaN;
-           end
-           
-           if Dist(k)< T6
-           
-            n6(k)= Int(k);
-           else    
-               n6(k)=NaN;
-           end
-           
-           if Dist(k)< T7
-               
-            n7(k)= Int(k);
-           else    
-               n7(k)=NaN;
-           end
-           
-           if Dist(k)< T8
-           
-            n8(k)= Int(k);
-           else    
-               n8(k)=NaN;
-           end
-           
-       end
-       
-         %calculamos el promedio de las intensidades que cumplen la condicion en funcion de T (Th)
-        p2(i,j)=mean(n2,'omitnan');
-        p3(i,j)=mean(n3,'omitnan');
-        p4(i,j)=mean(n4,'omitnan');
-        p5(i,j)=mean(n5,'omitnan');
-        p6(i,j)=mean(n6,'omitnan');
-        p7(i,j)=mean(n7,'omitnan');
-        p8(i,j)=mean(n8,'omitnan');
-        
-        p1(i,j)=mean(na1,'omitnan');
-
-        if p1(i,j)>=bb1
-            q1(i,j)=A(i,j);
-        end
-        
-        if p1(i,j)>=bb2
-            qa1(i,j)=A(i,j);
-        end
-
-        if p1(i,j)>=bb3
-            qb1(i,j)=A(i,j);
-        end
-        
-        if p1(i,j)>=bb4
-            qc1(i,j)=A(i,j);
-        end
-        
-        if p1(i,j)>=bb5
-            qd1(i,j)=A(i,j);
-        end
-
-        if p1(i,j)>=bb6
-            qe1(i,j)=A(i,j);
-        end
-        if p1(i,j)>=bb7
-            qf1(i,j)=A(i,j);
-        end
-        
-        if p1(i,j)>=bb8
-            qg1(i,j)=A(i,j);
-        end
-        
-        if p1(i,j)>=bb9
-            qh1(i,j)=A(i,j);
-        end
-        
-        %T2
-              
-       
-        
-        if p2(i,j)>=bb1
-            q2(i,j)=A(i,j);
-        end
-        
-        if p2(i,j)>=bb2
-            qa2(i,j)=A(i,j);
-        end
-
-        if p2(i,j)>=bb3
-            qb2(i,j)=A(i,j);
-        end
-        
-        if p2(i,j)>=bb4
-            qc2(i,j)=A(i,j);
-        end
-        
-        if p2(i,j)>=bb5
-            qd2(i,j)=A(i,j);
-        end
-
-        if p2(i,j)>=bb6
-            qe2(i,j)=A(i,j);
-        end
-        if p2(i,j)>=bb7
-            qf2(i,j)=A(i,j);
-        end
-        
-        if p2(i,j)>=bb8
-            qg2(i,j)=A(i,j);
-        end
-        
-        if p2(i,j)>=bb9
-            qh2(i,j)=A(i,j);
-        end
-        
-        %t3
-        
-        if p3(i,j)>=bb1
-            q3(i,j)=A(i,j);
-        end
-        
-        if p3(i,j)>=bb2
-            qa3(i,j)=A(i,j);
-        end
-
-        if p3(i,j)>=bb3
-            qb3(i,j)=A(i,j);
-        end
-        
-        if p3(i,j)>=bb4
-            qc3(i,j)=A(i,j);
-        end
-        
-        if p3(i,j)>=bb5
-            qd3(i,j)=A(i,j);
-        end
-
-        if p3(i,j)>=bb6
-            qe3(i,j)=A(i,j);
-        end
-        if p3(i,j)>=bb7
-            qf3(i,j)=A(i,j);
-        end
-        
-        if p3(i,j)>=bb8
-            qg3(i,j)=A(i,j);
-        end
-        
-        if p3(i,j)>=bb9
-            qh3(i,j)=A(i,j);
-        end
-        
-        
-        %t4
-        
-        
-        if p4(i,j)>=bb1
-            q4(i,j)=A(i,j);
-        end
-        
-        if p4(i,j)>=bb2
-            qa4(i,j)=A(i,j);
-        end
-
-        if p4(i,j)>=bb3
-            qb4(i,j)=A(i,j);
-        end
-        
-        if p4(i,j)>=bb4
-            qc4(i,j)=A(i,j);
-        end
-        
-        if p4(i,j)>=bb5
-            qd4(i,j)=A(i,j);
-        end
-
-        if p4(i,j)>=bb6
-            qe4(i,j)=A(i,j);
-        end
-        if p4(i,j)>=bb7
-            qf4(i,j)=A(i,j);
-        end
-        
-        if p4(i,j)>=bb8
-            qg4(i,j)=A(i,j);
-        end
-        
-        if p4(i,j)>=bb9
-            qh4(i,j)=A(i,j);
-        end
-        
-        
-        
-        %t5
-        
-        if p5(i,j)>=bb1
-            q5(i,j)=A(i,j);
-        end
-        
-        if p5(i,j)>=bb2
-            qa5(i,j)=A(i,j);
-        end
-
-        if p5(i,j)>=bb3
-            qb5(i,j)=A(i,j);
-        end
-        
-        if p5(i,j)>=bb4
-            qc5(i,j)=A(i,j);
-        end
-        
-        if p5(i,j)>=bb5
-            qd5(i,j)=A(i,j);
-        end
-
-        if p5(i,j)>=bb6
-            qe5(i,j)=A(i,j);
-        end
-        if p5(i,j)>=bb7
-            qf5(i,j)=A(i,j);
-        end
-        
-        if p5(i,j)>=bb8
-            qg5(i,j)=A(i,j);
-        end
-        
-        if p5(i,j)>=bb9
-            qh5(i,j)=A(i,j);
-        end
-        
-        
-        %t6
-        
-        if p6(i,j)>=bb1
-            q6(i,j)=A(i,j);
-        end
-        
-        if p6(i,j)>=bb2
-            qa6(i,j)=A(i,j);
-        end
-
-        if p6(i,j)>=bb3
-            qb6(i,j)=A(i,j);
-        end
-        
-        if p6(i,j)>=bb4
-            qc6(i,j)=A(i,j);
-        end
-        
-        if p6(i,j)>=bb5
-            qd6(i,j)=A(i,j);
-        end
-
-        if p6(i,j)>=bb6
-            qe6(i,j)=A(i,j);
-        end
-        if p6(i,j)>=bb7
-            qf6(i,j)=A(i,j);
-        end
-        
-        if p6(i,j)>=bb8
-            qg6(i,j)=A(i,j);
-        end
-        
-        if p6(i,j)>=bb9
-            qh6(i,j)=A(i,j);
-        end
-        
-        
-        
-        %t7
-        if p7(i,j)>=bb1
-            q7(i,j)=A(i,j);
-        end
-        
-        if p7(i,j)>=bb2
-            qa7(i,j)=A(i,j);
-        end
-
-        if p7(i,j)>=bb3
-            qb7(i,j)=A(i,j);
-        end
-        
-        if p7(i,j)>=bb4
-            qc7(i,j)=A(i,j);
-        end
-        
-        if p7(i,j)>=bb5
-            qd7(i,j)=A(i,j);
-        end
-
-        if p7(i,j)>=bb6
-            qe7(i,j)=A(i,j);
-        end
-        if p7(i,j)>=bb7
-            qf7(i,j)=A(i,j);
-        end
-        
-        if p7(i,j)>=bb8
-            qg7(i,j)=A(i,j);
-        end
-        
-        if p7(i,j)>=bb9
-            qh7(i,j)=A(i,j);
-        end
-        
-        
-        %t8
-        
-        if p8(i,j)>=bb1
-            q8(i,j)=A(i,j);
-        end
-        
-        if p8(i,j)>=bb2
-            qa8(i,j)=A(i,j);
-        end
-
-        if p8(i,j)>=bb3
-            qb8(i,j)=A(i,j);
-        end
-        
-        if p8(i,j)>=bb4
-            qc8(i,j)=A(i,j);
-        end
-        
-        if p8(i,j)>=bb5
-            qd8(i,j)=A(i,j);
-        end
-
-        if p8(i,j)>=bb6
-            qe8(i,j)=A(i,j);
-        end
-        if p8(i,j)>=bb7
-            qf8(i,j)=A(i,j);
-        end
-        
-        if p8(i,j)>=bb8
-            qg8(i,j)=A(i,j);
-        end
-        
-        if p8(i,j)>=bb9
-            qh8(i,j)=A(i,j);
-        end
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        end
-        
-      
     end
+end
+        %Intensidad=zeros(n1,m1);
+    tiempo =toc/60   
+    
+    % de aqui para abajo va cambiado
+    %la forma q vamos a reconstruir la imagen es a partir de mascara
+   
+ 
+
+tic
+B_p_1 = hu_matrix1(:,:,1); 
+B_p_h1 = reshape(B_p_1,[1 1 numel(B_p_1)]);
+B_p_2 = hu_matrix1(:,:,2);
+B_p_h2 = reshape(B_p_2,[1 1 numel(B_p_2)]);
+
+ 
+
+aux_1 = (hu_matrix2(:,:,1) - B_p_h1) .^ 2;
+aux_2 = (hu_matrix2(:,:,2) - B_p_h2) .^ 2;
+dist = aux_1 + aux_2;
+toc
+    
+    %recorremos el vencidario del logo
+
+    %Comparo la matriz grande de distancias con el th
+    % generando una matriz logica para cada Th
+    
+   mask1=(dist<T1);
+   p1=sum(mask1,size(mask1,3));
+   umbral1=(p1>bb1);
+   q1=umbral1*A;
+   
+   umbrala1=(p1>bb2);
+   qa1=umbrala1*A;
+   umbralb1=(p1>bb3);
+   qb1=umbralb1*A;
+   umbralc1=(p1>bb4);
+   qc1=umbralc1*A;
+   umbrald1=(p1>bb5);
+   qd1=umbrald1*A;
+   umbrale1=(p1>bb6);
+   qe1=umbrale1*A;
+   umbralf1=(p1>bb7);
+   qf1=umbralf1*A;
+   umbralg1=(p1>bb8);
+   qg1=umbralg1*A;
+   umbralh1=(p1>bb9);
+   qh1=umbralh1*A;
+   
+   mask2=(dist<T2);
+   
+   p2=sum(mask2,size(mask2,3));
+   umbral2=(p2>bb1);
+   q2=umbral2*A;
+   
+   umbrala2=(p2>bb2);
+   qa2=umbrala2*A;
+   umbralb2=(p2>bb3);
+   qb2=umbralb2*A;
+   umbralc2=(p2>bb4);
+   qc2=umbralc2*A;
+   umbrald2=(p2>bb5);
+   qd2=umbrald2*A;
+   umbrale2=(p2>bb6);
+   qe2=umbrale2*A;
+   umbralf2=(p2>bb7);
+   qf2=umbralf2*A;
+   umbralg2=(p2>bb8);
+   qg2=umbralg2*A;
+   umbralh2=(p2>bb9);
+   qh2=umbralh2*A;
+   
+   mask3=(dist<T3);
+      
+   p3=sum(mask3,size(mask3,3));
+   umbral3=(p3>bb1);
+   q3=umbral3*A;
+   
+   umbrala3=(p3>bb2);
+   qa3=umbrala3*A;
+   umbralb3=(p3>bb3);
+   qb3=umbralb3*A;
+   umbralc3=(p3>bb4);
+   qc3=umbralc3*A;
+   umbrald3=(p3>bb5);
+   qd3=umbrald3*A;
+   umbrale3=(p3>bb6);
+   qe3=umbrale3*A;
+   umbralf3=(p3>bb7);
+   qf3=umbralf3*A;
+   umbralg3=(p3>bb8);
+   qg3=umbralg3*A;
+   umbralh3=(p3>bb9);
+   qh3=umbralh3*A;
+   
+   mask4=(dist<T4);
+      
+   p4=sum(mask4,size(mask4,3));
+   umbral4=(p4>bb1);
+   q4=umbral4*A;
+   
+   umbrala4=(p4>bb2);
+   qa4=umbrala4*A;
+   umbralb4=(p4>bb3);
+   qb4=umbralb4*A;
+   umbralc4=(p4>bb4);
+   qc4=umbralc4*A;
+   umbrald4=(p4>bb5);
+   qd4=umbrald4*A;
+   umbrale4=(p4>bb6);
+   qe4=umbrale4*A;
+   umbralf4=(p4>bb7);
+   qf4=umbralf4*A;
+   umbralg4=(p4>bb8);
+   qg4=umbralg4*A;
+   umbralh4=(p4>bb9);
+   qh4=umbralh4*A;
+   
+   mask5=(dist<T5);
+   
+   p5=sum(mask5,size(mask5,3));
+   umbral5=(p5>bb1);
+   q5=umbral5*A;
+   
+   umbrala5=(p5>bb2);
+   qa5=umbrala5*A;
+   umbralb5=(p5>bb3);
+   qb5=umbralb5*A;
+   umbralc5=(p5>bb4);
+   qc5=umbralc5*A;
+   umbrald5=(p5>bb5);
+   qd5=umbrald5*A;
+   umbrale5=(p5>bb6);
+   qe5=umbrale5*A;
+   umbralf5=(p5>bb7);
+   qf5=umbralf5*A;
+   umbralg5=(p5>bb8);
+   qg5=umbralg5*A;
+   umbralh5=(p5>bb9);
+   qh5=umbralh5*A;
+   
+   mask6=(dist<T6);
+   
+   
+   p6=sum(mask6,size(mask6,3));
+   umbral6=(p6>bb1);
+   q6=umbral6*A;
+   
+   umbrala6=(p6>bb2);
+   qa6=umbrala6*A;
+   umbralb6=(p6>bb3);
+   qb6=umbralb6*A;
+   umbralc6=(p6>bb4);
+   qc6=umbralc6*A;
+   umbrald6=(p6>bb5);
+   qd6=umbrald6*A;
+   umbrale6=(p6>bb6);
+   qe6=umbrale6*A;
+   umbralf6=(p6>bb7);
+   qf6=umbralf6*A;
+   umbralg6=(p6>bb8);
+   qg6=umbralg6*A;
+   umbralh6=(p6>bb9);
+   qh6=umbralh6*A;
+   
+   mask7=(dist<T7);
+   
+   p7=sum(mask7,size(mask7,3));
+   umbral7=(p7>bb1);
+   q7=umbral7*A;
+   
+   umbrala7=(p7>bb2);
+   qa7=umbrala7*A;
+   umbralb7=(p7>bb3);
+   qb7=umbralb7*A;
+   umbralc7=(p7>bb4);
+   qc7=umbralc7*A;
+   umbrald7=(p7>bb5);
+   qd7=umbrald7*A;
+   umbrale7=(p7>bb6);
+   qe7=umbrale7*A;
+   umbralf7=(p7>bb7);
+   qf7=umbralf7*A;
+   umbralg7=(p7>bb8);
+   qg7=umbralg7*A;
+   umbralh7=(p7>bb9);
+   qh7=umbralh7*A;
+   
+   mask8=(dist<T8);
+   
+   
+   p8=sum(mask8,size(mask8,3));
+   umbral8=(p8>bb1);
+   q8=umbral8*A;
+   
+   umbrala8=(p8>bb2);
+   qa8=umbrala8*A;
+   umbralb8=(p8>bb3);
+   qb8=umbralb8*A;
+   umbralc8=(p8>bb4);
+   qc8=umbralc8*A;
+   umbrald8=(p8>bb5);
+   qd8=umbrald8*A;
+   umbrale8=(p8>bb6);
+   qe8=umbrale8*A;
+   umbralf8=(p8>bb7);
+   qf8=umbralf8*A;
+   umbralg8=(p8>bb8);
+   qg8=umbralg8*A;
+   umbralh8=(p8>bb9);
+   
+   qh8=umbralh8*A;   
+       
+
+    
+  
 end
 
 
