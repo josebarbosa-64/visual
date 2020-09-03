@@ -1,29 +1,31 @@
 function modificacionCodeH2 ()
-%Funcion con H Sin normalizar con zeropadingo y dos momentos de Hu
+%Funcion con H Sin normalizar y dos momentos de Hu
 clear
+A=magic(5);
 I1=double(imread('PRUEBA.png'))/255;
 I2=double(imread('Logos/nike.png'))/255;
-%h0.1 -0.11-0.12-0.13-0.14-0.15-0.16-0.17
-bb1=0.1;
-bb2=0.06;
-bb3=0.07;
-bb4=0.08;
-bb5=0.09;
-bb6=0.11;
-bb7=0.12;
-bb8=0.13;
-bb9=0.14;
-T1=8; % este es el parametro th
-T2=7;
-T3=6;
-T4=5;
-T5=4;
-T6=50;
-T7=20;
-T8=10;
-
-
 N= 94;
+%h
+bb1=0.1;
+bb2=0.2;
+bb3=0.3;
+bb4=0.4;
+bb5=0.5;
+bb6=0.6;
+bb7=0.7;
+bb8=0.8;
+bb9=0.9;
+T1=0.1; % este es el parametro th
+T2=0.2;
+T3=0.3;
+T4=0.4;
+T5=0.5;
+T6=0.6;
+T7=0.7;
+T8=0.8;
+
+
+
 [p1 q1 p2 q2 p3 q3 p4 q4 p5 q5 p6 q6 p7 q7 p8 q8 qa1 qa2 qa3 qa4 qa5 qa6 qa7 qa8 qb1 qb2 qb3 qb4 qb5 qb6 qb7 qb8 qc1 qc2 qc3 qc4 qc5 qc6 qc7 qc8 qd1 qd2 qd3 qd4 qd5 qd6 qd7 qd8 qe1 qe2 qe3 qe4 qe5 qe6 qe7 qe8 qf1 qf2 qf3 qf4 qf5 qf6 qf7 qf8 qg1 qg2 qg3 qg4 qg5 qg6 qg7 qg8 qh1 qh2 qh3 qh4 qh5 qh6 qh7 qh8 ]=NLM_hu(I1,I2,N,T1,T2,T3,T4,T5,T6,T7,T8,bb1,bb2,bb3,bb4,bb5,bb6,bb7,bb8,bb9);
 
 imwrite(uint8(p1*255),strcat('prueba_corazon_Th= ', num2str(T1),',',num2str(N),'puntos.tif'))
@@ -234,8 +236,8 @@ qh8=zeros(n,m);
 hu_matrix1=zeros(n1,m1,2);
 hu_matrix2=zeros(n,m,2);
 
-for i=1:05:n1
-    for j=1:5:m1        
+for i=1:n1
+    for j=1:m1        
 
         %small neighborhoods limits
         if i-N_midle <= 0
@@ -282,6 +284,7 @@ weight=1./(var_hu);
 
 
 %neighborhood calculation
+tic
 for i=1:n
     for j=1:m
         
@@ -326,7 +329,9 @@ for i=1:n
         else
             jnf=j+N_midle;
         end
+        
         hu_matrix2(i,j,:)=hu_moment_fast(A(ini:inf,jni:jnf)); %matriz hu de la fig grande
+<<<<<<< HEAD
         dist=zeros(n1,m1);
         Intensidad=zeros(n1,m1);
         
@@ -337,9 +342,24 @@ for i=1:n
            
         dist(i,j)=sum(weight.*aux);
         Intensidad= A;
+=======
+        
+    end
+end
+        %Intensidad=zeros(n1,m1);
+    tiempo =toc/60   
+    
+    
+    %recorremos el vencidario del logo
+for i=1:n
+    for j=1:m    
+     
+       aux = (hu_matrix2 - hu_matrix1(i,j,:)).^2;
+       dist = aux(:,:,1) + aux(:,:,2);
+>>>>>>> 205e1dff9fc3cc4bbbfef66272fe614b228a764e
         
        Dist=reshape(dist,1,[]);
-       Int=reshape(Intensidad,1,[]);
+       Int=reshape(A,1,[]);
        
        Largo=size(Dist,2);
        
@@ -725,6 +745,7 @@ for i=1:n
         if p8(i,j)>=bb9
             qh8(i,j)=A(i,j);
         end
+<<<<<<< HEAD
         
         
         
@@ -747,7 +768,10 @@ for i=1:n
         end
         
       
+=======
+>>>>>>> 205e1dff9fc3cc4bbbfef66272fe614b228a764e
     end
+end  
 end
 
 
